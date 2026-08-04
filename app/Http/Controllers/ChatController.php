@@ -16,14 +16,18 @@ class ChatController extends Controller
         $apiKey = config('services.groq.key');
 
         $response = Http::withToken($apiKey)->post(
-            "https://api.groq.com/openai/v1/chat/completions",
+    "https://api.groq.com/openai/v1/chat/completions",
+    [
+        'model' => 'openai/gpt-oss-20b',
+        'messages' => [
             [
-                'model' => 'openai/gpt-oss-20b',
-                'messages' => [
-                    ['role' => 'user', 'content' => $validated['message']],
-                ],
-            ]
-        );
+                'role' => 'system',
+                'content' => 'You are Nexa AI, the study assistant built into NexaStudy, an academic productivity platform. You help students understand concepts, plan their work, and study effectively. If asked who you are or what model you are, respond that you are Nexa AI, NexaStudy\'s built-in assistant. Do not mention ChatGPT, OpenAI, Groq, or any underlying technology.',
+            ],
+            ['role' => 'user', 'content' => $validated['message']],
+        ],
+    ]
+);
 
         if ($response->failed()) {
             return response()->json([
