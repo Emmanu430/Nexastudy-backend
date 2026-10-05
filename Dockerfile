@@ -40,4 +40,5 @@ EXPOSE 10000
 
 # 6. On start: cache the config (this reads the environment variables you set in Render), then run Apache
 # CMD ["sh", "-c", "php artisan config:cache && apache2-foreground"]
-CMD ["sh", "-c", "php artisan config:cache && php artisan migrate --force && apache2-foreground"]
+# CMD ["sh", "-c", "php artisan config:cache && php artisan migrate --force && apache2-foreground"]
+CMD ["sh", "-c", "php artisan migrate --force && php artisan config:cache && apache2-foreground"]
